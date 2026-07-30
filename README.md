@@ -6,6 +6,9 @@ wizard chases you and gains ground when you stop. Collect **10 coins** per stage
 to clear it — a friendly dragon carries you to a **shop**, then on to the next
 stage. High scores and game videos accumulate in your personal folder.
 
+![Game screenshot](Screenshot%20from%202026-07-30%2020-44-01.png)
+
+
 Each stage has its own environment, hazard and synthesized soundtrack:
 
 | Stage | Theme | Hazard |
