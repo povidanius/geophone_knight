@@ -1,0 +1,67 @@
+# Ignore all binary files EXCEPT *.wav (the procedural soundtracks are kept).
+# Text sources (*.py, *.json, *.md, *.txt) are tracked as usual.
+
+# --- Python bytecode / caches ---
+__pycache__/
+*.py[cod]
+*.pyd
+
+# --- Trained models / datasets (binary) ---
+*.pt
+*.pth
+*.onnx
+*.npz
+*.npy
+*.pkl
+*.pickle
+*.h5
+
+# --- Video recordings and other media (but NOT wav) ---
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.gif
+*.mp3
+*.ogg
+*.flac
+*.m4a
+*.aac
+
+# --- Images ---
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.tif
+*.tiff
+*.ico
+
+# --- Archives ---
+*.zip
+*.tar
+*.gz
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+
+# --- Compiled / native binaries ---
+*.so
+*.dll
+*.dylib
+*.o
+*.a
+*.bin
+*.exe
+*.class
+*.jar
+*.pdf
+
+# Keep the WAV soundtracks tracked even if a broad rule above would match.
+!*.wav
+
+# --- Local helper scripts (not part of the project) ---
+/push_to_github

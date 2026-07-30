@@ -1,0 +1,11 @@
+{
+  "fs": 90.16698159870103,
+  "threshold": 1.8,
+  "abs_level": 0.0,
+  "min_level": 0.3,
+  "refractory": 0.6,
+  "walk_peak": 0.0,
+  "jump_peak": 9.0,
+  "walk_activity": 0.3049,
+  "jump_over_walk_ratio": 9000000.0
+}

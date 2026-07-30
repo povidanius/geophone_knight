@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+#
+# Publish this project to GitHub:  https://github.com/povidanius/geophone_knight
+#
+#   ./push_to_github                 # publish a clean snapshot
+#   ./push_to_github "my message"    # use a custom commit message
+#
+# WHAT THIS PUBLISHES
+# -------------------
+# Only *text* sources and the *.wav soundtracks are pushed:
+#   *.py  *.json  *.md  *.txt  *.wav  *.sh  *.gitignore  push_to_github
+# Binary/generated artifacts are NEVER published -- trained models (*.pt),
+# datasets (*.npz), video recordings (*.mp4), Python bytecode (*.pyc), etc.
+# They stay on your disk; they are just not sent to GitHub.
+#
+# HOW
+# ---
+# The public repo is published as a single, clean commit on an orphan branch
+# (no binary-laden history). Each run rebuilds that snapshot from your current
+# working tree and force-pushes it, so the GitHub repo always mirrors exactly
+# the text+wav files you have now -- and stays tiny. Your local branches and
+# history (medieval, main, ...) are left completely untouched.
+#
+# Authentication: pushing needs write access to the remote. Use either
+#   * a GitHub Personal Access Token (git will prompt, or store it with
+#     `git config --global credential.helper store`), or
+#   * SSH keys -- then set REMOTE_URL below to git@github.com:povidanius/geophone_knight.git
+#
+set -euo pipefail
+
+REMOTE_URL="https://github.com/povidanius/geophone_knight.git"
+REMOTE_NAME="origin"
+# Branch published on GitHub. This is the remote's default branch, so force-
+# pushing the clean snapshot here replaces the old binary-laden history outright.
+PUBLISH_BRANCH="master"
+
+# Always operate from the repository root (this script lives there).
+cd "$(dirname "$0")"
+
+# 1) Ensure a git repository exists.
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    git init
+fi
+
+# 2) Point 'origin' at the GitHub repo (add if missing, update if it differs).
+if git remote get-url "$REMOTE_NAME" >/dev/null 2>&1; then
+    git remote set-url "$REMOTE_NAME" "$REMOTE_URL"
+else
+    git remote add "$REMOTE_NAME" "$REMOTE_URL"
+fi
+
+MSG="${1:-Publish geophone_knight (source + soundtracks)}"
+
+# 3) Collect the files to publish: text sources + wav soundtracks only.
+#    git ls-files honours .gitignore, so binaries are already excluded; we then
+#    keep only the text/wav whitelist and add the always-wanted helper files.
+mapfile -t FILES < <(
+    {
+        git ls-files --cached --others --exclude-standard
+        [ -f push_to_github ] && echo "push_to_github"
+    } | grep -iE '\.(py|json|md|txt|wav|cfg|ini|toml|ya?ml|sh)$|(^|/)\.gitignore$|(^|/)push_to_github$' \
+      | sort -u
+)
+
+if [ "${#FILES[@]}" -eq 0 ]; then
+    echo >&2 "No text/wav files found to publish -- aborting."
+    exit 1
+fi
+
+echo "Publishing ${#FILES[@]} text/soundtrack files (no binaries):"
+printf '  %s\n' "${FILES[@]}"
+
+# 4) Build a clean, single-commit snapshot in a throwaway index so the working
+#    tree and current branch are never touched.
+TMP_INDEX="$(mktemp -u "${TMPDIR:-/tmp}/geophone_index.XXXXXX")"
+cleanup() { rm -f "$TMP_INDEX"; }
+trap cleanup EXIT
+
+GIT_INDEX_FILE="$TMP_INDEX" git read-tree --empty
+GIT_INDEX_FILE="$TMP_INDEX" git update-index --add -- "${FILES[@]}"
+TREE="$(GIT_INDEX_FILE="$TMP_INDEX" git write-tree)"
+COMMIT="$(git commit-tree "$TREE" -m "$MSG")"
+
+# 5) Force-push the clean snapshot as the published branch.
+echo "Force-pushing clean snapshot to $REMOTE_URL ($PUBLISH_BRANCH) ..."
+if ! git push -f "$REMOTE_NAME" "${COMMIT}:refs/heads/${PUBLISH_BRANCH}"; then
+    echo >&2
+    echo "Push failed (authentication or network?)." >&2
+    echo "For HTTPS, provide a Personal Access Token when prompted, or store one:" >&2
+    echo "    git config --global credential.helper store" >&2
+    exit 1
+fi
+
+echo "Done: https://github.com/povidanius/geophone_knight/tree/$PUBLISH_BRANCH"
