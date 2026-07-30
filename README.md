@@ -60,7 +60,7 @@ python geophone_game.py --simulate     # no hardware
 python geophone_game.py --name Jonas   # different player
 ```
 
-**Controls:** walk near the sensor to move; jump on the sensor to jump (or
+**Controls:** walk near the sensor to move, jump near it to jump (or
 **Up**/**J**). Hold **Space** to walk manually. In the shop, `[1]`/`[2]`/`[3]`
 buy upgrades (higher jump, extra heart, full heal) and `[Enter]` starts the next
 stage. **R** restarts, **Q**/**Esc** quits (score saved).
