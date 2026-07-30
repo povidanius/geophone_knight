@@ -105,3 +105,7 @@ Model and datasets are local, regenerable, and untracked:
 rm -f geophone_model.pt jump_model.json
 rm -rf training_data/
 ```
+
+## Authors
+
+Povilas Daniušis (geophone interface, classifier) and Albertas Daniušis (agenda and stages design)
