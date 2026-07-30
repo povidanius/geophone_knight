@@ -9,7 +9,6 @@ stage. High scores and game videos accumulate in your personal folder.
 ![Game screenshot](Screenshot%20from%202026-07-30%2020-44-01.png)
 ![SMt](sm32_schematics1.png)
 
-Info on wiring:
 [Info on wiring](https://www.seismometer.info/seismograph-alpha-version-based-on-esp32-ads1115-and-sm24/)
 
 sm32_schematics.png
