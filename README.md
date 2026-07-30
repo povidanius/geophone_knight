@@ -10,7 +10,7 @@ stage. High scores and game videos accumulate in your personal folder.
 ![SMt](sm32_schematics1.png)
 
 Info on wiring:
-[Info on wiring](https://www.seismometer.info/seismograph-alpha-version-based-on-esp32-ads1115-and-sm24/](https://www.seismometer.info/seismograph-alpha-version-based-on-esp32-ads1115-and-sm24/)
+[Info on wiring](https://www.seismometer.info/seismograph-alpha-version-based-on-esp32-ads1115-and-sm24/)
 
 sm32_schematics.png
 Each stage has its own environment, hazard and synthesized soundtrack:
