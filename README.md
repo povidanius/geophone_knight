@@ -1,8 +1,7 @@
 # Smart Geophone game — Medieval edition
 
 A geophone-driven side-scroller. A compact PyTorch model classifies the signal
-window as **still** or **walk** to move a **knight** (his shield bears the gold
-**Columns of Gediminas**); a separate onset detector fires **jumps**. An evil
+window as **still** or **walk** to move a **knight** and a separate onset detector fires **jumps**. An evil
 wizard chases you and gains ground when you stop. Collect **10 coins** per stage
 to clear it — a friendly dragon carries you to a **shop**, then on to the next
 stage. High scores and game videos accumulate in your personal folder.
