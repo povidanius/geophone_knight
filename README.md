@@ -113,4 +113,4 @@ rm -rf training_data/
 
 ## Authors
 
-Povilas Daniušis (geophone interface, classifier) and Albertas Daniušis (agenda and stages design)
+Povilas Daniušis (geophone interface, classifier) and Albertas Daniušis (agenda and coding stages design with Claude Code)
